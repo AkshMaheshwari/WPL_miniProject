@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - The Thali Express</title>
+    <title>Register - The Thali Express</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -12,17 +12,26 @@
         <div class="login-box">
             <h1>The Thali Express</h1>
             <p>We tell tales through taste</p>
-            <h2>Login</h2>
-            <form action="login.php" method="POST">
+            <h2>Register</h2>
+            <form action="register.php" method="POST">
+                <label>Full Name:</label>
+                <input type="text" name="fullname" placeholder="Enter your full name" required>
+
+                <label>Phone Number:</label>
+                <input type="tel" name="phone" placeholder="Enter your phone number" required>
+
                 <label>Email Address:</label>
                 <input type="email" name="email" placeholder="Enter your email" required>
-
+                
+                <label>Address:</label>
+                <textarea name="address" placeholder="Enter your address" required></textarea>
+                
                 <label>Password:</label>
                 <input type="password" name="password" placeholder="Enter your password" required> 
                 
-                <button type="submit">Login</button>
+                <button type="submit">Register</button>
             </form>
-            <p>Don't have an account? <a href="register.html">Register here</a></p>
+            <p>Already have an account? <a href="login.html">Login here</a></p>
         </div>
     </section>
 

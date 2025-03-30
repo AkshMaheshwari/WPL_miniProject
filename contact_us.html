@@ -12,17 +12,19 @@
         <div class="login-box">
             <h1>The Thali Express</h1>
             <p>We tell tales through taste</p>
-            <h2>Login</h2>
-            <form action="login.php" method="POST">
+            <h2>Contact Us</h2>
+            <form>
+                <label>Name:</label>
+                <input type="text" name="name" placeholder="Enter your name" required>
                 <label>Email Address:</label>
                 <input type="email" name="email" placeholder="Enter your email" required>
 
-                <label>Password:</label>
-                <input type="password" name="password" placeholder="Enter your password" required> 
+                <label>Phone Number:</label>
+                <input type="number" name="number" placeholder="Enter your Number" required> 
                 
-                <button type="submit">Login</button>
+                <button type="submit" onclick="alert('Response Recorded!');">Submit</button>
             </form>
-            <p>Don't have an account? <a href="register.html">Register here</a></p>
+            
         </div>
     </section>
 

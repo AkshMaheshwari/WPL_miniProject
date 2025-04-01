@@ -1,0 +1,90 @@
+<!-- payment.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment - The Thali Express</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="navbar.css">
+
+</head>
+<body>
+    <!--navbar-->
+    <nav class="navbar">
+        <ul class="navbar__menu">
+            <li class="navbar__item">
+                <a href="#" class="navbar__link"><i data-feather="Menu"></i><span>Menu</span></a>
+            </li>
+            <li class="navbar__item">
+                <a href="cart.html" class="navbar__link"><i data-feather="Cart"></i><span>Cart</span></a>
+            </li>
+        </ul>
+    </nav>
+    
+    <div class="payment-container">
+        <div class="payment-box">
+            <h2>Payment Details</h2>
+            <div id="order-summary"></div>
+            <form id="payment-form">
+                <label for="card-number">Card Number</label>
+                <input type="text" id="card-number" required>
+                
+                <label for="expiry-date">Expiry Date</label>
+                <input type="text" id="expiry-date" required>
+                
+                <label for="cvv">CVV</label>
+                <input type="text" id="cvv" required>
+                
+                <button type="submit">Pay Now</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const orderSummary = document.getElementById("order-summary");
+            let orderDetails = "";
+            let total = 0;
+            
+            const membership = JSON.parse(localStorage.getItem("membership"));
+            const cart = JSON.parse(localStorage.getItem("cart")) || [];
+            
+            if (membership) {
+                orderDetails += `<p><strong>Membership Plan:</strong> ${membership.name} - ₹${membership.price}</p>`;
+                total += membership.price;
+            }
+            
+            if (cart.length > 0) {
+                orderDetails += `<h3>Cart Items:</h3>`;
+                cart.forEach(item => {
+                    orderDetails += `<p>${item.name} - ₹${item.price}</p>`;
+                    total += item.price;
+                });
+            }
+            
+            orderDetails += `<h3>Total: ₹${total}</h3>`;
+            orderSummary.innerHTML = orderDetails;
+        });
+
+        document.getElementById("payment-form").addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            const membership = JSON.parse(localStorage.getItem("membership"));
+            const cart = JSON.parse(localStorage.getItem("cart")) || [];
+            
+            if (membership) {
+                localStorage.setItem("order", JSON.stringify([membership]));
+                localStorage.removeItem("membership");
+            }
+            
+            if (cart.length > 0) {
+                localStorage.setItem("order", JSON.stringify(cart));
+                localStorage.removeItem("cart");
+            }
+            
+            window.location.href = "confirmation.html";
+        });
+    </script>
+</body>
+</html>

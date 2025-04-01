@@ -3,12 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Your Cart</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="navbar.css">
 </head>
 <body>
-    
-    <script src="cart.js">
-        
-    </script>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <ul class="navbar__menu">
+          <li class="navbar__item">
+            <a href="menu.html" class="navbar__link"><i data-feather="Menu"></i><span>Menu</span> </a>
+          </li>
+          <li class="navbar__item">
+            <a href="membership.html" class="navbar__link"><i data-feather="Membership"></i><span>Membership</span></a>        
+          </li>
+          <li class="navbar__item">
+            <a href="cart.html" class="navbar__link"><i data-feather="Cart"></i><span>Cart</span></a>        
+          </li>
+          <li class="navbar__item">
+            <a href="contact_us.html" class="navbar__link"><i data-feather="Contact Us"></i><span>Contact Us</span></a>        
+          </li>
+        </ul>
+      </nav>
+
+    <!-- Cart Page -->
+    <div class="cart-container">
+        <h2>Your Cart</h2>
+        <div id="cart-items" class="cart-items">
+            <!-- Cart items will be dynamically injected here -->
+        </div>
+
+        <div class="cart-summary">
+            <p>Total: ₹<span id="total-price">0</span></p>
+            <button id="checkout-button" class="checkout-btn" onclick="redirect()">Proceed to Checkout</button>
+            <script>
+              function redirect() {
+                window.location.href = "payment.html";
+            }
+            </script>
+        </div>
+    </div>
+
+    <script src="cart.js"></script>
 </body>
 </html>

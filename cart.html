@@ -36,12 +36,19 @@
         <div class="cart-summary">
             <p>Total: ₹<span id="total-price">0</span></p>
             <button id="checkout-button" class="checkout-btn" onclick="redirect()">Proceed to Checkout</button>
+            <button id="clear-button" class="clear-btn" onclick="clearCart()">Empty cart</button>
             <script>
               function redirect() {
                 window.location.href = "payment.html";
             }
+              function clearCart() {
+                localStorage.removeItem("cart");
+                document.getElementById("cart-items").innerHTML = "<p>Your cart is empty.</p>";
+                document.getElementById("total-price").innerText = "0";
+              }
             </script>
         </div>
+
     </div>
 
     <script src="cart.js"></script>

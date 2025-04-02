@@ -4,7 +4,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const addToCartButtons = document.querySelectorAll(".add-to-cart");
 
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
-
     // Function to update the cart UI
     function updateCart() {
         cartItemsContainer.innerHTML = '';

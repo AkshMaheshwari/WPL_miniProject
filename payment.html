@@ -1,4 +1,3 @@
-<!-- payment.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,14 +6,13 @@
     <title>Payment - The Thali Express</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="navbar.css">
-
 </head>
 <body>
-    <!--navbar-->
+    <!-- Navbar -->
     <nav class="navbar">
         <ul class="navbar__menu">
             <li class="navbar__item">
-                <a href="#" class="navbar__link"><i data-feather="Menu"></i><span>Menu</span></a>
+                <a href="menu.html" class="navbar__link"><i data-feather="Menu"></i><span>Menu</span></a>
             </li>
             <li class="navbar__item">
                 <a href="cart.html" class="navbar__link"><i data-feather="Cart"></i><span>Cart</span></a>
@@ -27,14 +25,38 @@
             <h2>Payment Details</h2>
             <div id="order-summary"></div>
             <form id="payment-form">
-                <label for="card-number">Card Number</label>
-                <input type="text" id="card-number" required>
-                
-                <label for="expiry-date">Expiry Date</label>
-                <input type="text" id="expiry-date" required>
-                
-                <label for="cvv">CVV</label>
-                <input type="text" id="cvv" required>
+                <label for="payment-method">Select Payment Method</label>
+                <select id="payment-method" required>
+                    <option value="cod">Cash on Delivery</option>
+                    <option value="gpay">Google Pay QR Code</option>
+                    <option value="card">Card Payment</option>
+                </select>
+                <br>
+                <br>
+
+                <div id="qr-code" style="display: none; text-align: center;">
+                    <img src="images/GpayQr.png" alt="Google Pay QR Code" width="200" height="200">
+                    
+                </div>
+                <br>
+                <br>
+
+                <div id="card-details" style="display: none;">
+                    <label for="card-number">Card Number</label>
+                    <br>
+                    <input type="text" id="card-number">
+                    <br>
+                    
+                    <label for="expiry-date">Expiry Date</label>
+                    <br>
+                    <input type="text" id="expiry-date">
+                    <br>
+                    
+                    <label for="cvv">CVV</label>
+                    <br>
+                    <input type="text" id="cvv">
+                    <br>
+                </div>
                 
                 <button type="submit">Pay Now</button>
             </form>
@@ -67,9 +89,51 @@
             orderSummary.innerHTML = orderDetails;
         });
 
+        document.getElementById("payment-method").addEventListener("change", function () {
+            const cardDetails = document.getElementById("card-details");
+            const qrCode = document.getElementById("qr-code");
+            
+            if (this.value === "card") {
+                cardDetails.style.display = "block";
+                qrCode.style.display = "none";
+            } else if (this.value === "gpay") {
+                qrCode.style.display = "block";
+                cardDetails.style.display = "none";
+            } else {
+                cardDetails.style.display = "none";
+                qrCode.style.display = "none";
+            }
+        });
+
         document.getElementById("payment-form").addEventListener("submit", function(event) {
             event.preventDefault();
-
+            
+            const paymentMethod = document.getElementById("payment-method").value;
+            
+            if (paymentMethod === "card") {
+                const cardNumber = document.getElementById("card-number").value.trim();
+                const expiryDate = document.getElementById("expiry-date").value.trim();
+                const cvv = document.getElementById("cvv").value.trim();
+        
+                // Card number validation (basic Luhn algorithm check)
+                if (!/^[0-9]{16}$/.test(cardNumber)) {
+                    alert("Invalid card number. Please enter a 16-digit number.");
+                    return;
+                }
+        
+                // Expiry date validation (MM/YY format)
+                if (!/^(0[1-9]|1[0-2])\/(\d{2})$/.test(expiryDate)) {
+                    alert("Invalid expiry date. Please use MM/YY format.");
+                    return;
+                }
+        
+                // CVV validation (3-digit number)
+                if (!/^[0-9]{3}$/.test(cvv)) {
+                    alert("Invalid CVV. Please enter a 3-digit number.");
+                    return;
+                }
+            }
+        
             const membership = JSON.parse(localStorage.getItem("membership"));
             const cart = JSON.parse(localStorage.getItem("cart")) || [];
             

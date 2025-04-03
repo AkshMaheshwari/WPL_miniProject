@@ -20,10 +20,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION["fullname"] = $fullname;
             $_SESSION["phone"] = $phone;
             $_SESSION["address"] = $address;
-            header("Location: menu.html");
+            header("Location: menu.php");
             exit();
         } else {
-            echo "<script>alert('Invalid password!'); window.location.href='index.html';</script>";
+            echo "<script>alert('Invalid password!'); window.location.href='login.html';</script>";
         }
     } else {
         echo "<script>alert('User not found! Please register first.'); window.location.href='register.html';</script>";

@@ -1,4 +1,6 @@
-
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,14 +9,29 @@
     <title>Menu - The Thali Express</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="navbar.css">
+    <style>
+        .user-greeting {
+    text-align: center;
+    font-size: 26px;
+    font-weight: bold;
+    color: #fff;
+    background: linear-gradient(to right, #ff4e50, #fc913a);
+    padding: 15px;
+    border-radius: 10px;
+    margin: 20px auto;
+    width: 80%;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+}
+    </style>
 </head>
 <body>
+        
     
     <!-- Navbar -->
     <nav class="navbar">
         <ul class="navbar__menu">
           <li class="navbar__item">
-            <a href="menu.html" class="navbar__link"><i data-feather="Menu"></i><span>Menu</span> </a>
+            <a href="menu.php" class="navbar__link"><i data-feather="Menu"></i><span>Menu</span> </a>
           </li>
           <li class="navbar__item">
             <a href="membership.html" class="navbar__link"><i data-feather="Membership"></i><span>Membership</span></a>        
@@ -25,9 +42,27 @@
           <li class="navbar__item">
             <a href="contact_us.html" class="navbar__link"><i data-feather="Contact Us"></i><span>Contact Us</span></a>        
           </li>
+          <li class="navbar__item">
+            <a href="profile.php" class="navbar__link"><i data-feather="Profile"></i><span>Profile</span></a>        
+          </li>
+          <li class="navbar__item">
+            <a href="orders.html" class="navbar__link"><i data-feather="Current Orders"></i><span>Current Orders</span></a>        
+          </li>
+          
 
         </ul>
       </nav>
+
+      <!-- User Greeting -->
+    <div class="user-greeting">
+        <?php 
+            if (isset($_SESSION['fullname'])) {
+                echo "Hello " . htmlspecialchars($_SESSION['fullname']) . ", What's on your plate today?";
+            } else {
+                echo "Hello User, What's on your plate today?";
+            }
+        ?>
+    </div>
 
     <!-- Menu Section -->
     <section class="menu-container">

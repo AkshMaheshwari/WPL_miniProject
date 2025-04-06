@@ -38,14 +38,14 @@
             <h1>The Thali Express</h1>
             <p>We tell tales through taste</p>
             <h2>Contact Us</h2>
-            <form>
+            <form action="contact_us.php" method="POST">
                 <label>Name:</label>
-                <input type="text" name="name" placeholder="Enter your name" required>
+                <input type="text" name="name" placeholder="Enter your name" required id="name">
                 <label>Email Address:</label>
-                <input type="email" name="email" placeholder="Enter your email" required>
+                <input type="email" name="email" placeholder="Enter your email" required id="email">
 
                 <label>Phone Number:</label>
-                <input type="number" name="number" placeholder="Enter your Number" required> 
+                <input type="tel" name="phone" placeholder="Enter your Number" required id="phone"> 
                 
                 <button type="submit" onclick="alert('Response Recorded!');">Submit</button>
             </form>

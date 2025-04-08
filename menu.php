@@ -48,8 +48,6 @@ session_start();
           <li class="navbar__item">
             <a href="orders.html" class="navbar__link"><i data-feather="Current Orders"></i><span>Current Orders</span></a>        
           </li>
-          
-
         </ul>
       </nav>
 

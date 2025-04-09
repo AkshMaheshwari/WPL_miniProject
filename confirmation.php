@@ -78,6 +78,9 @@ $conn->close();
           <li class="navbar__item">
             <a href="orders.html" class="navbar__link"><i data-feather="Current Orders"></i><span>Current Orders</span></a>        
           </li>
+          <li class="navbar__item">
+            <a href="logout.php" class="navbar__link"><i data-feather="Logout"></i><span>Logout</span></a>        
+          </li>
         </ul>
       </nav>
 
@@ -91,9 +94,7 @@ $conn->close();
         <h3>Restaurant Location</h3>
         <img
           class="static-map"
-          src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/BlankMap-World6.svg/640px-BlankMap-World6.svg.png"
-          alt="Restaurant Map Placeholder"
-        />
+          src="images/map.png"/>
         <div class="user-address">Delivery Address: <?php echo htmlspecialchars($address); ?></div>
       </div>
     </div>

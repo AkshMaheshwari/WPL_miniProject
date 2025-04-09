@@ -69,6 +69,9 @@ $conn->close();
           <li class="navbar__item">
             <a href="orders.html" class="navbar__link"><i data-feather="Current Orders"></i><span>Current Orders</span></a>        
           </li>
+          <li class="navbar__item">
+            <a href="logout.php" class="navbar__link"><i data-feather="Logout"></i><span>Logout</span></a>        
+          </li>
         </ul>
       </nav>
 
@@ -94,5 +97,6 @@ $conn->close();
              
         </div>
     </section>
+
 </body>
 </html>

@@ -1,101 +1,189 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Current Orders - The Thali Express</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="navbar.css">
-    <style>
-        /* orders css */
-.orders-container {
-    max-width: 800px;
-    margin: 50px auto;
-    background: white;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
-    text-align: center;
-}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Current Orders - The Thali Express</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="navbar.css">
+  <style>
+    /* orders css */
+    .orders-container {
+      max-width: 800px;
+      margin: 50px auto;
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+      text-align: center;
+    }
 
-.orders-container h2 {
-    color: #ff4e50;
-    margin-bottom: 20px;
-}
+    .orders-container h2 {
+      color: #ff4e50;
+      margin-bottom: 20px;
+    }
 
-.order-item {
-    background: #ffe4e1;
-    padding: 15px;
-    border-radius: 10px;
-    margin: 10px 0;
-    box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.1);
-    font-size: 18px;
-}
+    .order-item {
+      background: #ffe4e1;
+      padding: 15px;
+      border-radius: 10px;
+      margin: 10px 0;
+      box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.1);
+      font-size: 18px;
+    }
 
-.total-price {
-    font-size: 20px;
-    font-weight: bold;
-    color: #ff4e50;
-    margin-top: 15px;
-}
+    .total-price {
+      font-size: 20px;
+      font-weight: bold;
+      color: #ff4e50;
+      margin-top: 15px;
+    }
 
-.no-orders {
-    font-size: 18px;
-    color: #777;
-    margin-top: 20px;
-}
-    </style>
+    .no-orders {
+      font-size: 18px;
+      color: #777;
+      margin-top: 20px;
+    }
+
+    /* Status styles */
+    .status.preparing-food {
+      color: #ffa500; /* orange */
+      font-weight: bold;
+    }
+
+    .status.delivering {
+      color: #1e90ff; /* blue */
+      font-weight: bold;
+    }
+
+    .status.delivered {
+      color: #32cd32; /* green */
+      font-weight: bold;
+    }
+  </style>
 </head>
 <body>
 
-    <!-- Navbar -->
-    <nav class="navbar">
-        <ul class="navbar__menu">
-          <li class="navbar__item">
-            <a href="menu.php" class="navbar__link"><i data-feather="Menu"></i><span>Menu</span> </a>
-          </li>
-          <li class="navbar__item">
-            <a href="membership.html" class="navbar__link"><i data-feather="Membership"></i><span>Membership</span></a>        
-          </li>
-          <li class="navbar__item">
-            <a href="cart.html" class="navbar__link"><i data-feather="Cart"></i><span>Cart</span></a>        
-          </li>
-          <li class="navbar__item">
-            <a href="contact_us.html" class="navbar__link"><i data-feather="Contact Us"></i><span>Contact Us</span></a>        
-          </li>
-          <li class="navbar__item">
-            <a href="profile.php" class="navbar__link"><i data-feather="Profile"></i><span>Profile</span></a>        
-          </li>
-          <li class="navbar__item">
-            <a href="orders.html" class="navbar__link"><i data-feather="Current Orders"></i><span>Current Orders</span></a>        
-          </li>
-        </ul>
-      </nav>
+  <!-- Navbar -->
+  <nav class="navbar">
+    <ul class="navbar__menu">
+      <li class="navbar__item">
+        <a href="menu.php" class="navbar__link"><i data-feather="Menu"></i><span>Menu</span> </a>
+      </li>
+      <li class="navbar__item">
+        <a href="membership.html" class="navbar__link"><i data-feather="Membership"></i><span>Membership</span></a>        
+      </li>
+      <li class="navbar__item">
+        <a href="cart.html" class="navbar__link"><i data-feather="Cart"></i><span>Cart</span></a>        
+      </li>
+      <li class="navbar__item">
+        <a href="contact_us.html" class="navbar__link"><i data-feather="Contact Us"></i><span>Contact Us</span></a>        
+      </li>
+      <li class="navbar__item">
+        <a href="profile.php" class="navbar__link"><i data-feather="Profile"></i><span>Profile</span></a>        
+      </li>
+      <li class="navbar__item">
+        <a href="orders.html" class="navbar__link"><i data-feather="Current Orders"></i><span>Current Orders</span></a>        
+      </li>
+      <li class="navbar__item">
+        <a href="logout.php" class="navbar__link"><i data-feather="Logout"></i><span>Logout</span></a>        
+      </li>
+    </ul>
+  </nav>
 
-    <div class="orders-container">
-        <h2>Your Current Orders</h2>
-        <div id="orders-list"></div>
-    </div>
+  <div class="orders-container">
+    <h2>Your Current Orders</h2>
+    <div id="orders-list"></div>
+  </div>
 
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const ordersContainer = document.getElementById("ordersContainer");
-            const orders = JSON.parse(localStorage.getItem("orders")) || [];
-    
-            if (orders.length === 0) {
-                ordersContainer.innerHTML = "<p>No orders found.</p>";
-                return;
-            }
-    
-            let html = "<h2>Your Orders</h2><ul>";
-            orders.forEach(order => {
-                html += `<li>Order #${order.id}: ${order.items.map(i => i.name).join(", ")} - ₹${order.total_price} - Status: ${order.status}</li>`;
-            });
-            html += "</ul>";
-    
-            ordersContainer.innerHTML = html;
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const ordersContainer = document.getElementById("orders-list");
+      let orders = JSON.parse(localStorage.getItem("orders")) || [];
+
+      if (orders.length === 0) {
+        ordersContainer.innerHTML = "<p class='no-orders'>No orders found.</p>";
+        return;
+      }
+
+      function renderOrders() {
+        ordersContainer.innerHTML = "";
+
+        if (orders.length === 0) {
+          ordersContainer.innerHTML = "<p class='no-orders'>No orders found.</p>";
+          return;
+        }
+
+        orders.forEach(order => {
+          const orderDiv = document.createElement("div");
+          orderDiv.classList.add("order-item");
+
+          let itemsList = order.items.map(item => `${item.name} - ₹${item.price}`).join("<br>");
+          const statusClass = order.status.toLowerCase().replace(/\s+/g, '-');
+
+          orderDiv.innerHTML = `
+            <p><strong>Order ID:</strong> #${order.id}</p>
+            <p>${itemsList}</p>
+            <p class="total-price">Total: ₹${order.total_price}</p>
+            <p class="status ${statusClass}"><strong>Status:</strong> ${order.status}</p>
+            <button class="remove-btn" data-id="${order.id}" style="margin-top:10px; background:#ff4e50; color:white; padding:8px 12px; border:none; border-radius:6px; cursor:pointer;">Remove</button>
+          `;
+
+          ordersContainer.appendChild(orderDiv);
         });
-    </script>
+
+        document.querySelectorAll(".remove-btn").forEach(button => {
+          button.addEventListener("click", function () {
+            const idToRemove = parseInt(this.getAttribute("data-id"));
+            orders = orders.filter(order => order.id !== idToRemove);
+            localStorage.setItem("orders", JSON.stringify(orders));
+            renderOrders();
+          });
+        });
+      }
+
+      function cycleOrderStatuses() {
+        orders.forEach((order, index) => {
+          if (order.status === "Delivered") return;
+
+          order.status = "Preparing Food";
+          localStorage.setItem("orders", JSON.stringify(orders));
+          renderOrders();
+
+          setTimeout(() => {
+            order.status = "Delivering";
+            localStorage.setItem("orders", JSON.stringify(orders));
+            renderOrders();
+          }, 5000 + index * 500);
+
+          setTimeout(() => {
+            order.status = "Delivered";
+            localStorage.setItem("orders", JSON.stringify(orders));
+            renderOrders();
+          }, 10000 + index * 500);
+        });
+      }
+
+      renderOrders();
+      cycleOrderStatuses();
+    });
+  </script>
+
+  <!-- on logout -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const logoutLink = document.querySelector('a[href="logout.php"]');
+
+      if (logoutLink) {
+        logoutLink.addEventListener("click", function (e) {
+          e.preventDefault();
+          localStorage.removeItem("orders");
+          localStorage.removeItem("order");
+          window.location.href = "logout.php";
+        });
+      }
+    });
+  </script>
 
 </body>
 </html>

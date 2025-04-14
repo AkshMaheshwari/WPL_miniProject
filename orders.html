@@ -143,26 +143,39 @@
       }
 
       function cycleOrderStatuses() {
-        orders.forEach((order, index) => {
-          if (order.status === "Delivered") return;
+    orders.forEach((order, index) => {
+        if (order.status === "Done") {
+            return; // Skip already delivered orders
+        }
 
-          order.status = "Preparing Food";
-          localStorage.setItem("orders", JSON.stringify(orders));
-          renderOrders();
+        // Set the status to "Preparing Food"
+        order.status = "Preparing Food";
+        localStorage.setItem("orders", JSON.stringify(orders));
+        renderOrders();
 
-          setTimeout(() => {
+        // After 5 seconds (plus a delay based on the order index), set the status to "Delivering"
+        setTimeout(() => {
             order.status = "Delivering";
             localStorage.setItem("orders", JSON.stringify(orders));
             renderOrders();
-          }, 5000 + index * 500);
+        }, 5000 + index * 500);
 
-          setTimeout(() => {
+        // After 10 seconds (plus a delay based on the order index), set the status to "Delivered"
+        setTimeout(() => {
             order.status = "Delivered";
             localStorage.setItem("orders", JSON.stringify(orders));
             renderOrders();
-          }, 10000 + index * 500);
-        });
-      }
+        }, 10000 + index * 500);
+
+        setTimeout(() =>{
+            order.status = "Done";
+            localStorage.setItem("orders", JSON.stringify(orders));
+            alert("Order Delivered Successfully! Give a feedback on the app!");
+            window.location.href = "feedback.php"; // Redirect to feedback page
+            
+        }, 11000 + index * 500);
+    });
+}
 
       renderOrders();
       cycleOrderStatuses();

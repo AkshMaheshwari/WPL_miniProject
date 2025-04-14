@@ -43,8 +43,8 @@ Make sure you have the following installed:
 #### Option A: Clone using Git
 
 ```bash
-git clone https://github.com/yourusername/thali_express.git
-cd thali_express
+git clone https://github.com/AkshMaheshwari/WPL_miniProject.git
+cd WPL_miniProject
 ```
 ### 🚀 3. Start the Local Server
 

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Membership Payment</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container py-5">
+        <h2 class="text-center mb-4">Membership Checkout</h2>
+        <div class="card mx-auto" style="max-width: 500px;">
+            <div class="card-body">
+                <h4 class="card-title text-center">Selected Membership</h4>
+                <p class="text-center" id="membership-details">Loading...</p>
+
+                <!-- Payment Method Selection -->
+                <div class="mb-4">
+                    <label for="payment-method" class="form-label">Select Payment Method</label>
+                    <select id="payment-method" class="form-select">
+                        <option value="" disabled selected>Select a payment method</option>
+                        <option value="gpay">Google Pay (GPay)</option>
+                        <option value="card">Credit/Debit Card</option>
+                    </select>
+                </div>
+
+                <!-- GPay Form -->
+                <div id="gpay-form" class="text-center d-none">
+                    <p>Scan the QR code below to pay with Google Pay:</p>
+                    <img src="images/gpayQr.png" alt="Google Pay QR Code" style="max-width: 100%; height: auto;">
+                    <button id="gpay-pay-btn" class="btn btn-primary w-100 mt-3">Pay Now with GPay</button>
+                </div>
+
+                <!-- Card Payment Form -->
+                <div id="card-form" class="mt-4 d-none">
+                    <h5>Pay with Card</h5>
+                    <div class="mb-3">
+                        <label for="card-number" class="form-label">Card Number</label>
+                        <input type="text" class="form-control" id="card-number" placeholder="1234 5678 9012 3456" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="expiry-date" class="form-label">Expiry Date</label>
+                        <input type="text" class="form-control" id="expiry-date" placeholder="MM/YY" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="cvv" class="form-label">CVV</label>
+                        <input type="text" class="form-control" id="cvv" placeholder="123" required>
+                    </div>
+                    <button id="card-pay-btn" class="btn btn-primary w-100">Pay Now with Card</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Load membership details from localStorage
+            const membership = JSON.parse(localStorage.getItem("membership")) || { name: "Free Plan", price: 0 };
+            const membershipDetails = document.getElementById("membership-details");
+            membershipDetails.textContent = `${membership.name} - ₹${membership.price}`;
+
+            // Elements
+            const paymentMethod = document.getElementById("payment-method");
+            const gpayForm = document.getElementById("gpay-form");
+            const cardForm = document.getElementById("card-form");
+
+            // Show/Hide Forms Based on Payment Method Selection
+            paymentMethod.addEventListener("change", function () {
+                if (this.value === "gpay") {
+                    gpayForm.classList.remove("d-none");
+                    cardForm.classList.add("d-none");
+                } else if (this.value === "card") {
+                    cardForm.classList.remove("d-none");
+                    gpayForm.classList.add("d-none");
+                }
+            });
+
+            // Handle GPay payment
+            const gpayPayBtn = document.getElementById("gpay-pay-btn");
+            gpayPayBtn.addEventListener("click", function () {
+                alert(`Payment successful using Google Pay for the ${membership.name} membership!`);
+                window.location.href = "membership.html"; // Redirect back to membership page
+            });
+
+            // Handle Card payment
+            const cardPayBtn = document.getElementById("card-pay-btn");
+            cardPayBtn.addEventListener("click", function () {
+                const expiryDate = document.getElementById("expiry-date").value;
+
+                // Validate expiry date
+                if (!isValidExpiryDate(expiryDate)) {
+                    alert("The card is expired. Please use a valid card.");
+                    return;
+                }
+
+                alert(`Payment successful using Card for the ${membership.name} membership!`);
+                window.location.href = "membership.html"; // Redirect back to membership page
+            });
+
+            // Function to validate expiry date
+            function isValidExpiryDate(expiryDate) {
+                const [month, year] = expiryDate.split("/").map(Number);
+                if (!month || !year || month < 1 || month > 12) {
+                    return false;
+                }
+
+                const currentDate = new Date();
+                const currentYear = currentDate.getFullYear() % 100; // Get last two digits of the year
+                const currentMonth = currentDate.getMonth() + 1; // Months are 0-based
+
+                // Check if the card is expired
+                return year > currentYear || (year === currentYear && month >= currentMonth);
+            }
+        });
+    </script>
+</body>
+</html>

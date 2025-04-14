@@ -120,6 +120,11 @@
         document.addEventListener("DOMContentLoaded", function () {
             const buyNowButtons = document.querySelectorAll(".add-to-cart");
     
+            // Default membership
+            if (!localStorage.getItem("membership")) {
+                localStorage.setItem("membership", JSON.stringify({ name: "Free Plan", price: 0 }));
+            }
+    
             buyNowButtons.forEach(button => {
                 button.addEventListener("click", function () {
                     let name = this.dataset.name;
@@ -128,10 +133,46 @@
                     // Store selected membership in localStorage
                     localStorage.setItem("membership", JSON.stringify({ name, price }));
     
+                    // Display alert based on membership benefits
+                    let benefitsMessage = "";
+                    if (name === "Distinguished Plan") {
+                        benefitsMessage = "₹50/- OFF on each order and Free Delivery!";
+                    } else if (name === "Connoissuer Plan") {
+                        benefitsMessage = "₹150/- OFF on each order, Free Delivery, and Priority Seating!";
+                    } else {
+                        benefitsMessage = "No additional benefits.";
+                    }
+    
+                    alert(`You have attempted to purchase the ${name}. Benefits: ${benefitsMessage}` + "\n\nPlease proceed to payment.");
+    
+                    // Adjust food item prices based on membership
+                    adjustFoodPrices(name);
+    
                     // Redirect to payment page
-                    window.location.href = "payment.html";
+                    window.location.href = "membership_pay.html";
                 });
             });
+    
+            // Function to adjust food prices based on membership
+            function adjustFoodPrices(membershipName) {
+                let cart = JSON.parse(localStorage.getItem("cart")) || [];
+                let discount = 0;
+    
+                if (membershipName === "Distinguished Plan") {
+                    discount = 50; // ₹50 off per item
+                } else if (membershipName === "Connoissuer Plan") {
+                    discount = 150; // ₹150 off per item
+                }
+    
+                // Apply discount to each item in the cart
+                cart = cart.map(item => {
+                    item.price = Math.max(0, item.price - discount); // Ensure price doesn't go below ₹0
+                    return item;
+                });
+    
+                // Update cart in localStorage
+                localStorage.setItem("cart", JSON.stringify(cart));
+            }
         });
     </script>
     

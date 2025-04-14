@@ -48,8 +48,13 @@
             <button id="clear-button" class="clear-btn" onclick="clearCart()">Empty cart</button>
             <script>
               function redirect() {
-                window.location.href = "payment.html";
-            }
+                  const cart = JSON.parse(localStorage.getItem("cart")) || [];
+                  if (cart.length === 0) {
+                      alert("Your cart is empty. Please add items to proceed to checkout.");
+                  } else {
+                      window.location.href = "payment.html";
+                  }
+              }
               function clearCart() {
                 localStorage.removeItem("cart");
                 document.getElementById("cart-items").innerHTML = "<p>Your cart is empty.</p>";

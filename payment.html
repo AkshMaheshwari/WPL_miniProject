@@ -12,7 +12,7 @@
     <nav class="navbar">
         <ul class="navbar__menu">
             <li class="navbar__item">
-                <a href="menu.html" class="navbar__link"><i data-feather="Menu"></i><span>Menu</span></a>
+                <a href="menu.php" class="navbar__link"><i data-feather="Menu"></i><span>Menu</span></a>
             </li>
             <li class="navbar__item">
                 <a href="cart.html" class="navbar__link"><i data-feather="Cart"></i><span>Cart</span></a>
@@ -36,7 +36,6 @@
 
                 <div id="qr-code" style="display: none; text-align: center;">
                     <img src="images/gpayQr.png" alt="Google Pay QR Code" width="200" height="200">
-                    
                 </div>
                 <br>
                 <br>
@@ -69,13 +68,7 @@
             let orderDetails = "";
             let total = 0;
             
-            const membership = JSON.parse(localStorage.getItem("membership"));
             const cart = JSON.parse(localStorage.getItem("cart")) || [];
-            
-            if (membership) {
-                orderDetails += `<p><strong>Membership Plan:</strong> ${membership.name} - ₹${membership.price}</p>`;
-                total += membership.price;
-            }
             
             if (cart.length > 0) {
                 orderDetails += `<h3>Cart Items:</h3>`;
@@ -134,13 +127,7 @@
                 }
             }
         
-            const membership = JSON.parse(localStorage.getItem("membership"));
             const cart = JSON.parse(localStorage.getItem("cart")) || [];
-            
-            if (membership) {
-                localStorage.setItem("order", JSON.stringify([membership]));
-                localStorage.removeItem("membership");
-            }
             
             if (cart.length > 0) {
                 localStorage.setItem("order", JSON.stringify(cart));

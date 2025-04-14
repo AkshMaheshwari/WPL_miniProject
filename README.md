@@ -46,13 +46,17 @@ Make sure you have the following installed:
 git clone https://github.com/AkshMaheshwari/WPL_miniProject.git
 cd WPL_miniProject
 ```
+### Option B: Download the repo as ZIP file
+---
 ### 🚀 3. Start the Local Server
 
 1. Open **XAMPP Control Panel**.
 2. Start **Apache** and **MySQL** services.
-3. Move the `thali_express` folder to your server directory:
-
-
+3. Move the `WPL_miniProjecf` folder to your server directory (ht docs in our case):
+4. After doing the same go to your browser and type in
+```bash
+localhost/WPL_miniProject/home
+```
 
 
 ---

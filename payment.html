@@ -73,8 +73,8 @@
             if (cart.length > 0) {
                 orderDetails += `<h3>Cart Items:</h3>`;
                 cart.forEach(item => {
-                    orderDetails += `<p>${item.name} - ₹${item.price}</p>`;
-                    total += item.price;
+                    orderDetails += `<p>${item.name} - ₹${item.price * item.quantity}</p>`;
+                    total += item.price * item.quantity;
                 });
             }
             

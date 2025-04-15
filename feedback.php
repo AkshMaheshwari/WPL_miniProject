@@ -116,6 +116,7 @@
             border-radius: 4px;
             cursor: pointer;
             font-size: 16px;
+            margin-top: 5px;
         }
         
         button:hover {
@@ -159,7 +160,13 @@
             </select>
             
             <button type="submit">Submit Feedback</button>
+            <button type="submit" onclick=redirect();>I'll fill later</button>
         </form>
     </div>
+    <script>
+        function redirect(){
+            window.location.href = "menu.php";
+        }
+    </script>
 </body>
 </html>

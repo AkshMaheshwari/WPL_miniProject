@@ -106,9 +106,9 @@ $conn->close();
     let total = 0;
 
     order.forEach(item => {
-      total += item.price;
+      total += item.price * item.quantity;
       const itemDetail = document.createElement("p");
-      itemDetail.textContent = `${item.name} - ₹${item.price}`;
+      itemDetail.textContent = `${item.name} - ₹${item.price * item.quantity}`;
       billDetails.appendChild(itemDetail);
     });
 

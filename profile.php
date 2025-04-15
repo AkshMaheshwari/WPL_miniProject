@@ -50,7 +50,7 @@ $conn->close();
     <style>
         body {
             font-family: 'Segoe UI', sans-serif;
-            background: linear-gradient(135deg, #ff4e50, #f9d423);
+            background-color: white;
             margin: 0;
             padding: 0;
         }
@@ -74,7 +74,7 @@ $conn->close();
 
         .profile-box h1 {
             font-size: 2rem;
-            color: #d32f2f;
+            color: #ff4e50;
             margin-bottom: 20px;
         }
 
@@ -108,7 +108,7 @@ $conn->close();
         }
 
         .profile-box button {
-            background: #d32f2f;
+            background: #ff4e50;
             color: #fff;
             border: none;
             padding: 10px 20px;

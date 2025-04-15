@@ -48,7 +48,7 @@
                     
                     <label for="expiry-date">Expiry Date</label>
                     <br>
-                    <input type="text" id="expiry-date">
+                    <input type="text" id="expiry-date" placeholder="MM/YY">
                     <br>
                     
                     <label for="cvv">CVV</label>
@@ -117,6 +117,17 @@
                 // Expiry date validation (MM/YY format)
                 if (!/^(0[1-9]|1[0-2])\/(\d{2})$/.test(expiryDate)) {
                     alert("Invalid expiry date. Please use MM/YY format.");
+                    return;
+                }
+
+                // Check if the card is expired
+                const [month, year] = expiryDate.split("/").map(Number);
+                const currentDate = new Date();
+                const currentYear = currentDate.getFullYear() % 100; // Get last two digits of the year
+                const currentMonth = currentDate.getMonth() + 1; // Months are 0-based
+
+                if (year < currentYear || (year === currentYear && month < currentMonth)) {
+                    alert("The card is expired. Please use a valid card.");
                     return;
                 }
         
